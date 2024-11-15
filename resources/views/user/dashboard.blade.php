@@ -5,17 +5,17 @@
     <!-- upper section -->
     <div class="dashboard-path-wrapper">
         <!-- Breadcrumb -->
-        <div class="text-sm text-customGray font-secondaryText mb-4 py-2">
-            <a href="#" class="text-customBrown  hover:underline" onclick="loadPage('dashboard')">Dashboard</a>
+        <div class="py-2 mb-4 text-sm text-customGray font-secondaryText">
+            <a href="#" class="text-customBrown hover:underline" onclick="loadPage('dashboard')">Dashboard</a>
             <span id="breadcrumb"> / Dashboard</span>
         </div>
         <!-- Sign out btn -->
-        <div class="text-sm mb-4">
+        <div class="mb-4 text-sm">
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <x-dropdown-link :href="route('logout')" class="text-customGray hover:underline"
                     onclick="event.preventDefault(); this.closest('form').submit();">
-                    {{ __('Sign out') }} <i class="fa-solid fa-arrow-right-from-bracket ml-1"></i>
+                    {{ __('Sign out') }} <i class="ml-1 fa-solid fa-arrow-right-from-bracket"></i>
                 </x-dropdown-link>
             </form>
         </div>
@@ -24,7 +24,7 @@
     <!-- Dashboard -->
     <div class="user-dashboard-wrapper">
         <!-- Navbar for mobile -->
-        <div class="bg-customBlue text-white p-4 flex justify-between items-center lg:hidden ">
+        <div class="flex items-center justify-between p-4 text-white bg-customBlue lg:hidden ">
             <div class="text-lg font-bold">Dashboard</div>
             <button id="menuToggle" class="text-white focus:outline-none">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -35,18 +35,12 @@
 
         <!-- Sidebar for desktop -->
         <div id="sidebar" class="dashboard-sidebar-desktop-wrapper">
-            <ul class="dashboard-sidebar-options flex flex-col text-secondaryText">
+            <ul class="flex flex-col dashboard-sidebar-options text-secondaryText">
                 <li class="u-sidebar-value rounded-t-md hover:rounded-t-md" data-page="dashboard" onclick="loadPage('dashboard')">
                     <i class="fa-regular fa-address-card ud-icon-left"></i>
                     <i class="fa-solid fa-arrow-right-long"></i>
                     <label for="dashboard" class="dashboard-sidebar-title">Dashboard</label><br>
                     <span class="dashboard-sidebar-sub-title">Summary of your account</span>
-                </li>
-                <li class="u-sidebar-value" data-page="myAdverts" onclick="loadPage('myAdverts')">
-                    <i class="fa-solid fa-rectangle-ad ud-icon-left"></i>
-                    <i class="fa-solid fa-arrow-right-long"></i>
-                    <label for="myAdvert" class="dashboard-sidebar-title">My adverts</label><br>
-                    <span class="dashboard-sidebar-sub-title">Vehicles you are selling</span>
                 </li>
                 <li class="u-sidebar-value" data-page="myMessages" onclick="loadPage('myMessages')">
                     <i class="fa-regular fa-envelope ud-icon-left"></i>
@@ -84,7 +78,7 @@
                     <label for="myAdvert" class="dashboard-sidebar-title">Account security</label><br>
                     <span class="dashboard-sidebar-sub-title">Change your password</span>
                 </li>
-                <li class="u-sidebar-value rounded-b-md hover:rounded-b-md border-none" data-page="selling" onclick="loadPage('selling')">
+                <li class="border-none u-sidebar-value rounded-b-md hover:rounded-b-md" data-page="selling" onclick="loadPage('selling')">
                     <i class="fa-solid fa-hand-holding-dollar ud-icon-left"></i>
                     <i class="fa-solid fa-arrow-right-long"></i>
                     <label for="myAdvert" class="dashboard-sidebar-title">Sell on Artisan.lk</label><br>
@@ -96,24 +90,31 @@
         <!-- Main Content -->
         <div class="u-dashboard-content-wrapper">
             <!-- Dashboard page -->
-            <div id="dashboard" class="ud-page-wrapper hidden">
-                <div class="ud-dashboard-page">
-                    <h2 class="text-[40px] font-bold text-customBrown font-mainText">Hello! {{ ucfirst(explode(' ', Auth::user()->name)[0]) }}</h2>
-                    <div class="flex gap-10 text-[#252a34] mb-4 font-secondaryText">
-                        <p class="mt-2"><i class="fa-regular fa-user mr-2"></i>{{ Auth::user()->name }}</p>
-                        <p class="mt-2"><i class="fa-regular fa-envelope mr-2"></i>{{ Auth::user()->email }}</p>
-                        <p class="mt-2"><i class="fa-regular fa-calendar mr-2"></i>Member since {{ Auth::user()->created_at->format('d M Y') }}</p>
+            <div id="dashboard" class="hidden ud-page-wrapper">
+                <div class="p-6 bg-white rounded shadow ud-dashboard-page">
+                <div class="flex">
+                        <div class="ud-profile-image-wrapper">
+                            <img src="{{ asset('https://png.pngtree.com/png-clipart/20230927/original/pngtree-man-avatar-image-for-profile-png-image_13001877.png') }}" alt="profile image" class="ud-profile-image">
+                        </div>
+                        <div class="pl-2 ml-3">
+                            <h2 class="text-[40px] font-bold text-customBrown font-mainText">Hello! {{ ucfirst(explode(' ', Auth::user()->name)[0]) }}</h2>
+                            <div class="flex gap-10 text-[#252a34] mb-4 font-secondaryText">
+                                <p class="mt-2"><i class="mr-2 fa-regular fa-user"></i>{{ Auth::user()->name }}</p>
+                                <p class="mt-2"><i class="mr-2 fa-regular fa-envelope"></i>{{ Auth::user()->email }}</p>
+                                <p class="mt-2"><i class="mr-2 fa-regular fa-calendar"></i>Member since {{ Auth::user()->created_at->format('d M Y') }}</p>
+                            </div>
+                            <button class="ud-btn font-secondaryText" onclick="loadPage('personalDetails')">Edit my details</button>
+                        </div>
                     </div>
-                    <button class="ud-btn font-secondaryText" onclick="loadPage('personalDetails')">Edit my details</button>
                 </div>
-                <div class="ud-dashboard-page">
+                <div class="p-6 bg-white rounded shadow ud-dashboard-page">
                     <h2 class="text-[40px] font-bold text-customBrown font-mainText">Find your favourite arts & crafts</h2>
                     <div class="flex gap-10 text-[#252a34] mb-4 font-secondaryText">
                         <p class="mt-2">We are the fastest growing largest digital marketplace for arts and crafts in Sri Lanka.</p>
                     </div>
                     <a href="{{ route('pages.shop') }}" class="ud-btn font-secondaryText">Browse products</a>
                 </div>
-                <div class="ud-dashboard-page">
+                <div class="p-6 bg-white rounded shadow ud-dashboard-page">
                     <h2 class="text-[40px] font-bold text-customBrown font-mainText">Looking to sell your arts & crafts?</h2>
                     <div class="flex gap-10 text-[#252a34] mb-4 font-secondaryText">
                         <p class="mt-2">Make more money by selling your unique products with Artisan.lk!</p>
@@ -122,46 +123,19 @@
                 </div>
             </div>
 
-            <!-- My advert page -->
-            <div id="myAdverts" class="ud-page-wrapper hidden">
-                <div class="ud-advert-page">
-                    <div class="ud-advert-status-wrapper flex-[25%]">
-                        <p class="mt-2 mb-2"></i>Status</p>
-                        <select name="" id="" class="border border-[#00000026] rounded-[5px]">
-                            <option value="all">All</option>
-                            <option value="live">Live</option>
-                            <option value="rejected">Rejected</option>
-                        </select>
-                    </div>
-                    <div class="ud-advert-keyword-wrapper flex-[50%]">
-                        <p class="mt-2 mb-2"></i>Keyword</p>
-                        <div class="flex">
-                            <input type="text" class="ud-advert-keyword-input" placeholder="Search adverts...">
-                            <a href="#"><i class="ud-advert-keyword-search fa-solid fa-magnifying-glass"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="ud-empty-body">
-                    <i class="fa-solid fa-magnifying-glass text-[#6C757D] text-[80px]"></i>
-                    <h2 class="text-[#6C757D] text-[40px] font-bold">No adverts found</h2>
-                    <span class="text-[#6C757D]">We couldn't find any records. Try changing search filters</span>
-                    <a href="./createAds.php" class="border bg-customRed text-white px-7 py-2 rounded-[50px] hover:shadow-4xl transition-all duration-300 ease-in-out">Create a new advert</a>
-                </div>
-            </div>
-
-            <div id="myMessages" class="ud-page-wrapper bg-white p-6 rounded shadow hidden">
+            <div id="myMessages" class="hidden p-6 bg-white rounded shadow ud-page-wrapper">
                 <h2 class="text-2xl font-bold text-blue-900">My messages</h2>
                 <p class="mt-2">Your messages.</p>
             </div>
 
-            <div id="myOrders" class="ud-page-wrapper bg-white p-6 rounded shadow hidden">
+            <div id="myOrders" class="hidden p-6 bg-white rounded shadow ud-page-wrapper">
                 <h2 class="text-2xl font-bold text-blue-900">My orders</h2>
                 <p class="mt-2">Your orders.</p>
             </div>
 
             <!-- My presonal details -->
             <div id="personalDetails" class="ud-page-wrapper">
-                <div class="ud-personal-page shadow-custom rounded-md p-6">
+                <div class="p-6 bg-white rounded shadow ud-personal-page">
                     <div class="ud-pro-change">
                         <h2 class="text-[50px] font-bold text-customBlue">Your details</h2>
                         <span>Please keep your details up to date. Your personal data is stored securely. We do not share information with third parties.</span>
@@ -171,20 +145,21 @@
 
                             <div class="mb-4">
                                 <label for="fullName" class="block text-sm font-medium text-gray-700">Full Name</label>
-                                <input type="text" name="name" id="fullName" placeholder="{{ Auth::user()->name }}" value="{{ old('name', Auth::user()->name) }}" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                <x-text-input id="name" name="name" type="text" class="block w-full mt-1" placeholder="{{ Auth::user()->name }}" value="{{ old('email', Auth::user()->name) }}" required autofocus autocomplete="name" />
                             </div>
 
                             <div class="mb-4">
                                 <label for="email" class="block text-sm font-medium text-gray-700">Email address</label>
-                                <input type="email" name="email" id="email" placeholder="{{ Auth::user()->email }}" value="{{ old('email', Auth::user()->email) }}" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                <x-text-input id="name" name="email" type="text" class="block w-full mt-1" placeholder="{{ Auth::user()->email }}" value="{{ old('email', Auth::user()->email) }}" required autofocus autocomplete="name" />
                             </div>
 
                             <div class="mb-4">
                                 <label for="mobile" class="block text-sm font-medium text-gray-700">Mobile</label>
-                                <input type="number" name="phone" id="mobile" placeholder="Enter your phone number" value="{{ old('phone', Auth::user()->phone) }}" min="0" oninput="this.value = Math.abs(this.value)" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">                            </div>
+                                <x-text-input id="name" name="phone" type="text" class="block w-full mt-1" placeholder="{{ Auth::user()->phone }}" value="{{ old('email', Auth::user()->phone) }}" required autofocus autocomplete="name" />
+                            </div>
 
                             <div>
-                                <button type="submit" id="submitButton" class="ud-btn bg-blue-500 text-red">Save my details</button>
+                                <button type="submit" id="submitButton" class="bg-blue-500 ud-btn text-red">Save my details</button>
                             </div>
                         </form>
                     </div>
@@ -193,22 +168,30 @@
 
             <!-- Account security page -->
             <div id="accountSecurity" class="ud-page-wrapper">
-                <div class="ud-security-page">
+                <div class="p-6 bg-white rounded shadow ud-security-page">
                     <div class="ud-pw-change">
                         <h2 class="text-[50px] font-bold text-customBlue">Your password</h2>
                         <span>Please make sure to have a secure password with at least 6 characters long.</span>
-                        <form action="" method="post" class="mt-4">
+                        <form method="post" action="{{ route('password.update') }}" class="mt-6 space-y-6">
+                            @csrf
+                            @method('put')
+
                             <div class="mb-4">
                                 <label for="currentPassword" class="block text-sm font-medium text-gray-700">Current password</label>
-                                <input type="password" name="currentPassword" id="currentPassword" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" required>
+                                <!-- <input type="password" name="currentPassword" id="currentPassword" class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" required> -->
+                                <x-text-input id="update_password_current_password" name="current_password" type="password" class="block w-full mt-1" autocomplete="current-password" />
+                                <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" />
                             </div>
                             <div class="mb-4">
                                 <label for="newPassword" class="block text-sm font-medium text-gray-700">New password</label>
-                                <input type="password" name="newPassword" id="newPassword" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" required>
+                                <!-- <input type="password" name="newPassword" id="newPassword" class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" required> -->
+                                <x-text-input id="update_password_password" name="password" type="password" class="block w-full mt-1" autocomplete="new-password" />
+
                             </div>
                             <div class="mb-4">
                                 <label for="confirmPassword" class="block text-sm font-medium text-gray-700">Confirm password</label>
-                                <input type="password" name="confirmPassword" id="confirmPassword" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" required>
+                                <!-- <input type="password" name="confirmPassword" id="confirmPassword" class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" required> -->
+                                <x-text-input id="update_password_password_confirmation" name="password_confirmation" type="password" class="block w-full mt-1" autocomplete="new-password" />
                             </div>
                             <button type="submit" class="ud-btn">Change password</button>
                         </form>
@@ -220,7 +203,7 @@
                         <h2 class="text-[50px] font-bold text-red">Delete account</h2>
                         <span>Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.</span>
                     </div>
-                    <button type="submit" class="ud-btn mt-3" x-data=""
+                    <button type="submit" class="mt-3 ud-btn" x-data=""
                         x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')">Delete my account</button>
                 </div>
 
@@ -244,13 +227,13 @@
                                 id="password"
                                 name="password"
                                 type="password"
-                                class="mt-1 block w-3/4"
+                                class="block w-3/4 mt-1"
                                 placeholder="{{ __('Password') }}" />
 
                             <x-input-error :messages="$errors->userDeletion->get('password')" class="mt-2" />
                         </div>
 
-                        <div class="mt-6 flex justify-end">
+                        <div class="flex justify-end mt-6">
                             <x-secondary-button x-on:click="$dispatch('close')">
                                 {{ __('Cancel') }}
                             </x-secondary-button>
@@ -267,7 +250,7 @@
 
             <!-- Selling Section -->
             <div id="selling" class="ud-page-wrapper">
-                <div class="ud-personal-page shadow-custom rounded-md p-6">
+                <div class="p-6 rounded-md ud-personal-page shadow-custom">
                     <div class="ud-pro-change">
                         <h2 class="text-[50px] font-bold text-customBlue">Become An Artisan.lk Seller Today!</h2>
                         <span>Create a Artisan.lk seller account now and reach millions of customers!</span>
@@ -277,26 +260,26 @@
 
                             <div class="mb-4">
                                 <label for="fullName" class="block text-sm font-medium text-gray-700">Full Name</label>
-                                <input type="text" name="name" id="fullName" placeholder="{{ Auth::user()->name }}" value="" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                <input type="text" name="name" id="fullName" placeholder="{{ Auth::user()->name }}" value="" class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                             </div>
 
                             <div class="mb-4">
                                 <label for="email" class="block text-sm font-medium text-gray-700">Email address</label>
-                                <input type="email" name="email" id="email" placeholder="{{ Auth::user()->email }}" value="" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                <input type="email" name="email" id="email" placeholder="{{ Auth::user()->email }}" value="" class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                             </div>
 
                             <div class="mb-4">
                                 <label for="mobile" class="block text-sm font-medium text-gray-700">Mobile</label>
-                                <input type="number" name="phone" id="mobile" placeholder="{{ Auth::user()->phone }}" value="" min="0" oninput="this.value = Math.abs(this.value)" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                <input type="number" name="phone" id="mobile" placeholder="{{ Auth::user()->phone }}" value="" min="0" oninput="this.value = Math.abs(this.value)" class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                             </div>
 
                             <div class="mb-4">
                                 <label for="shopName" class="block text-sm font-medium text-gray-700">Display Name / Shop Name</label>
-                                <input type="text" name="shopName" id="shopName" placeholder="Enter dispaly name or shop name" value="" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                <input type="text" name="shopName" id="shopName" placeholder="Enter dispaly name or shop name" value="" class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                             </div>
 
                             <div>
-                                <button type="submit" id="submitButton" class="ud-btn bg-blue-500 text-red">Create vendor profile</button>
+                                <button type="submit" id="submitButton" class="bg-blue-500 ud-btn text-red">Create vendor profile</button>
                             </div>
                         </form>
                         <!-- <div class="tab">
@@ -315,6 +298,147 @@
                         </div> -->
                     </div>
                 </div>
+
+                <x-modal name="confirm-user-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
+                    <form method="post" action="{{ route('profile.destroy') }}" class="p-6">
+                        @csrf
+                        @method('delete')
+
+                        <h2 class="text-lg font-medium text-gray-900">
+                            {{ __('Are you sure you want to delete your account?') }}
+                        </h2>
+
+                        <p class="mt-1 text-sm text-gray-600">
+                            {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.') }}
+                        </p>
+
+                        <div class="mt-6">
+                            <x-input-label for="password" value="{{ __('Password') }}" class="sr-only" />
+
+                            <x-text-input
+                                id="password"
+                                name="password"
+                                type="password"
+                                class="block w-3/4 mt-1"
+                                placeholder="{{ __('Password') }}" />
+
+                            <x-input-error :messages="$errors->userDeletion->get('password')" class="mt-2" />
+                        </div>
+
+                        <div class="flex justify-end mt-6">
+                            <x-secondary-button x-on:click="$dispatch('close')">
+                                {{ __('Cancel') }}
+                            </x-secondary-button>
+
+                            <x-danger-button class="ms-3">
+                                {{ __('Delete Account') }}
+                            </x-danger-button>
+                        </div>
+                    </form>
+                </x-modal>
+
+            </div>
+
+
+            <!-- Selling Section -->
+            <div id="selling" class="ud-page-wrapper">
+                <div class="p-6 bg-white rounded shadow ud-personal-page">
+                    <div class="ud-pro-change">
+                        <h2 class="text-[50px] font-bold text-customBlue">Become An Artisan.lk Seller Today!</h2>
+                        <span>Create a Artisan.lk seller account now and reach millions of customers!</span>
+
+                        <form id="profileForm" action="{{ route('vendor.register') }}" method="post" class="mt-4">
+                            @csrf
+
+                            <div class="mb-4">
+                                <label for="shopName" class="block text-sm font-medium text-gray-700">Display Name / Shop Name</label>
+                                <input type="text" name="business_name" id="shopName" placeholder="Enter display name or shop name" value="" class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="businessDescription" class="block text-sm font-medium text-gray-700">Business Description</label>
+                                <textarea name="business_description" id="businessDescription" placeholder="Enter business description" class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"></textarea>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="businessCategory" class="block text-sm font-medium text-gray-700">Business Category</label>
+                                <input type="text" name="business_category" id="businessCategory" placeholder="Enter business category" value="" class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="businessPhone" class="block text-sm font-medium text-gray-700">Business Phone</label>
+                                <input type="text" name="business_phone" id="businessPhone" placeholder="Enter business phone" value="" class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="businessEmail" class="block text-sm font-medium text-gray-700">Business Email</label>
+                                <input type="email" name="business_email" id="businessEmail" placeholder="Enter business email" value="" class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="businessAddress" class="block text-sm font-medium text-gray-700">Business Address</label>
+                                <input type="text" name="business_address" id="businessAddress" placeholder="Enter business address" value="" class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                            </div>
+
+                            <div>
+                                <button type="submit" id="submitButton" class="bg-blue-500 ud-btn text-red">Create vendor profile</button>
+                            </div>
+                        </form>
+                        <!-- <div class="tab">
+                            <button class="tab-link" onclick="openTab(event, 'tab1')">Seller</button>
+                            <button class="tab-link" onclick="openTab(event, 'tab2')">Shop</button>
+                        </div>
+
+                        <div id="tab1" class="tab-content">
+                            <h3>Seller</h3>
+                            <p>Content for Tab 1.</p>
+                        </div>
+
+                        <div id="tab2" class="tab-content">
+                            <h3>Shop</h3>
+                            <p>Content for Tab 2.</p>
+                        </div> -->
+                    </div>
+                </div>
+
+                <x-modal name="confirm-user-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
+                    <form method="post" action="{{ route('profile.destroy') }}" class="p-6">
+                        @csrf
+                        @method('delete')
+
+                        <h2 class="text-lg font-medium text-gray-900">
+                            {{ __('Are you sure you want to delete your account?') }}
+                        </h2>
+
+                        <p class="mt-1 text-sm text-gray-600">
+                            {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.') }}
+                        </p>
+
+                        <div class="mt-6">
+                            <x-input-label for="password" value="{{ __('Password') }}" class="sr-only" />
+
+                            <x-text-input
+                                id="password"
+                                name="password"
+                                type="password"
+                                class="block w-3/4 mt-1"
+                                placeholder="{{ __('Password') }}" />
+
+                            <x-input-error :messages="$errors->userDeletion->get('password')" class="mt-2" />
+                        </div>
+
+                        <div class="flex justify-end mt-6">
+                            <x-secondary-button x-on:click="$dispatch('close')">
+                                {{ __('Cancel') }}
+                            </x-secondary-button>
+
+                            <x-danger-button class="ms-3">
+                                {{ __('Delete Account') }}
+                            </x-danger-button>
+                        </div>
+                    </form>
+                </x-modal>
+
             </div>
         </div>
     </div>
@@ -379,7 +503,7 @@
         });
 
 
-        //change the behaovier in the forms
+        // change the behaovier in the forms
         document.getElementById('profileForm').addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent page refresh
 

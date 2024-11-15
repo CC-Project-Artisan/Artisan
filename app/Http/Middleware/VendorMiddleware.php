@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Middleware\Admin;
+namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminMiddleware
+class VendorMiddleware
 {
     /**
      * Handle an incoming request.
@@ -15,6 +16,10 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        return $next($request);
+        if (Auth::user()->role == 'vendor') {
+            return $next($request);
+        } else {
+            return redirect()->route('welcome');
+        }
     }
 }

@@ -3,36 +3,12 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Vendor;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User; // Add this line to import the User model
-use App\Models\Vendor; // Add this line to import the Vendor model
-use Illuminate\Http\Request; // Add this line to import the Request class
 
-class UserController extends Controller
+class VendorController extends Controller
 {
-    public function update(ProfileUpdateRequest $request)
-    {
-        $user = Auth::user();
-
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->phone = $request->phone;
-
-        $request->user()->save();
-
-        // return redirect()->back()->with('success', 'Profile updated successfully.');
-        // return response()->json(['success' => true]);
-        return response()->json([
-            'success' => true,
-            'user' => [
-                'name' => $user->name,
-                'email' => $user->email,
-                'created_at' => $user->created_at->format('d M Y'),
-            ]
-        ]);
-    }
-
     public function registerVendor(Request $request)
     {
         $request->validate([
@@ -65,5 +41,36 @@ class UserController extends Controller
 
         // Redirect to the vendor dashboard
         return redirect()->route('dashboard')->with('success', 'Vendor profile created successfully.');
+    }
+
+    // update store details
+    public function updateStoreDetails(Request $request)
+    {
+        $request->validate([
+            'business_name' => 'required|string|max:255',
+            'business_description' => 'nullable|string',
+            'business_category' => 'nullable|string',
+            'business_phone' => 'required|string|max:255',
+            'business_email' => 'required|string|email|max:255',
+            'business_address' => 'nullable|string',
+        ]);
+
+        $user = Auth::user();
+        $vendor = Vendor::where('user_id', $user->id)->first();
+
+        if ($vendor) {
+            $vendor->business_name = $request->business_name;
+            $vendor->business_description = $request->business_description;
+            $vendor->business_category = $request->business_category;
+            $vendor->business_phone = $request->business_phone;
+            $vendor->business_email = $request->business_email;
+            $vendor->business_address = $request->business_address;
+
+            $vendor->save();
+
+            return redirect()->route('dashboard')->with('success', 'Store details updated successfully.');
+        }
+
+        return redirect()->route('dashboard')->with('error', 'Vendor profile not found.');
     }
 }

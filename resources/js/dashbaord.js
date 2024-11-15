@@ -1,5 +1,5 @@
- // Load the dashboard page in mobile view
- document.getElementById('menuToggle').addEventListener('click', function() {
+// Load the dashboard page in mobile view
+document.getElementById('menuToggle').addEventListener('click', function () {
     const sidebar = document.getElementById('sidebar');
     sidebar.classList.toggle('hidden');
 });
@@ -8,7 +8,7 @@
 function loadPage(page) {
     // Hide all pages
     var pages = document.querySelectorAll('.ud-page-wrapper');
-    pages.forEach(function(p) {
+    pages.forEach(function (p) {
         p.classList.add('hidden');
     });
 
@@ -23,7 +23,7 @@ function loadPage(page) {
 
     // Update the active state in the sidebar
     var items = document.querySelectorAll('.u-sidebar-value');
-    items.forEach(function(item) {
+    items.forEach(function (item) {
         item.classList.remove('bg-customBlue');
     });
 
@@ -42,3 +42,5 @@ function loadPage(page) {
         console.error('Breadcrumb element not found.');
     }
 }
+
+
